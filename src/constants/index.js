@@ -1,7 +1,7 @@
 import { 
-  people01, people02, people03, 
+  lav,
   facebook, instagram, linkedin, twitter, 
-  airbnb, binance, coinbase, dropbox, 
+  mi, mtc, ysp, 
   send, shield, star  
 } from "../assets";
 
@@ -15,8 +15,8 @@ export const navLinks = [
     title: "Services",
   },
   {
-    id: "about",
-    title: "About Us",
+    id: "products",
+    title: "Products",
   },
   {
     id: "clients",
@@ -48,48 +48,39 @@ export const features = [
   },
 ];
 
-export const feedback = [
+export const products = [
   {
-    id: "feedback-1",
-    content:
-      "Glory Impact Resources helped us scale our production with reliable manufacturing and global reach.",
-    name: "Angela Thompson",
-    title: "COO, PureEssence",
-    img: people01,
+    id: "product-1",
+    name: "LAVENDE",
+    img: lav,
   },
   {
-    id: "feedback-2",
-    content:
-      "Their team went above and beyond to help us navigate international trade challenges with ease.",
-    name: "James Liu",
-    title: "Head of Sourcing, NovaTech",
-    img: people02,
+    id: "product-2",
+    name: "Product 2",
+    img: lav,
   },
   {
-    id: "feedback-3",
-    content:
-      "A one-stop solution for retail supply chain and e-commerce — truly global, truly impactful.",
-    name: "Lena Rodriguez",
-    title: "Founder, EcoGlam",
-    img: people03,
+    id: "product-3",
+    name: "Product 3",
+    img: lav,
   },
 ];
 
 export const stats = [
   {
     id: "stats-1",
-    title: "Products Delivered",
-    value: "10,000+",
+    title: "Products Sold",
+    value: "1M+",
   },
   {
     id: "stats-2",
-    title: "Countries Served",
-    value: "25+",
+    title: "Years Experience",
+    value: "7+",
   },
   {
     id: "stats-3",
     title: "Global Clients",
-    value: "300+",
+    value: "4+",
   },
 ];
 
@@ -185,18 +176,14 @@ export const socialMedia = [
 export const clients = [
   {
     id: "client-1",
-    logo: airbnb,
+    logo: mi,
   },
   {
     id: "client-2",
-    logo: binance,
+    logo: mtc,
   },
   {
     id: "client-3",
-    logo: coinbase,
-  },
-  {
-    id: "client-4",
-    logo: dropbox,
+    logo: ysp,
   },
 ];
