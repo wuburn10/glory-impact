@@ -21,6 +21,8 @@ import instagram from "./instagram.svg";
 import linkedin from "./linkedin.svg";
 import twitter from "./twitter.svg";
 import lav from "./lav.svg";
+import fhw from "./fhw.svg";
+import bot from "./bot.svg";
 
 export {
   mi,
@@ -46,4 +48,6 @@ export {
   linkedin,
   twitter,
   lav,
+  fhw,
+  bot,
 };

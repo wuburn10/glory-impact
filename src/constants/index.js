@@ -1,5 +1,5 @@
 import { 
-  lav,
+  lav, fhw, bot,
   facebook, instagram, linkedin, twitter, 
   mi, mtc, ysp, 
   send, shield, star  
@@ -51,18 +51,18 @@ export const features = [
 export const products = [
   {
     id: "product-1",
-    name: "LAVENDE",
+    name: "Perfumes",
     img: lav,
   },
   {
     id: "product-2",
-    name: "Product 2",
-    img: lav,
+    name: "2 in 1 Haic Cream & Gel",
+    img: bot,
   },
   {
     id: "product-3",
-    name: "Product 3",
-    img: lav,
+    name: "Herbal Feminine Wash",
+    img: fhw,
   },
 ];
 
