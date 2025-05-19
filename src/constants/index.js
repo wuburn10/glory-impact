@@ -51,12 +51,12 @@ export const features = [
 export const products = [
   {
     id: "product-1",
-    name: "Perfumes",
+    name: "Various Perfumes",
     img: lav,
   },
   {
     id: "product-2",
-    name: "2 in 1 Haic Cream & Gel",
+    name: "2 in 1 Hair Cream & Gel",
     img: bot,
   },
   {
