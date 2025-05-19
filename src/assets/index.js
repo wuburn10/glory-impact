@@ -23,6 +23,9 @@ import twitter from "./twitter.svg";
 import lav from "./lav.svg";
 import fhw from "./fhw.svg";
 import bot from "./bot.svg";
+import so from "./so.svg";
+import ufresh from "./ufresh.pdf";
+import sevenoil from "./sevenoil.pdf";
 
 export {
   mi,
@@ -50,4 +53,7 @@ export {
   lav,
   fhw,
   bot,
+  so,
+  ufresh,
+  sevenoil,
 };

@@ -5,9 +5,18 @@ const ProductCard = ({ productName, productImage, productDescription }) => (
       <h4 className="font-poppins font-semibold text-[20px] leading-[32px] text-white text-center">
         {productName}
       </h4>
-      <p className="font-poppins font-normal text-[16px] leading-[24px] text-dimWhite mt-3 text-center">
-        {productDescription}
-      </p>
+      {productDescription ? (
+        <a
+          href={productDescription}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-3 flex justify-center"
+        >
+          <button className="py-2 px-6 font-poppins font-medium text-[16px] text-primary bg-blue-gradient rounded-[10px] outline-none">
+            See More
+          </button>
+        </a>
+      ) : null}
     </div>
   </div>
 );

@@ -1,5 +1,5 @@
 import { 
-  lav, fhw, bot,
+  lav, fhw, bot, so, sevenoil, ufresh,
   facebook, instagram, linkedin, twitter, 
   mi, mtc, ysp, 
   send, shield, star  
@@ -62,7 +62,14 @@ export const products = [
   {
     id: "product-3",
     name: "Herbal Feminine Wash",
+    description: ufresh,
     img: fhw,
+  },
+  {
+    id: "product-4",
+    name: "Seven Oil Golden Shower Oil",
+    description: sevenoil,
+    img: so,
   },
 ];
 

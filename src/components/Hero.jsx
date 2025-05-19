@@ -27,7 +27,7 @@ const Hero = () => {
           Connection.
         </h1>
         <p className={`${styles.paragraph} mt-5`}>
-          At Glory Impact Resources, we are driven by a passion for building bridges between ideas, markets, and people. An multifaceted inspired global company, we specialize in creating innovative solutions that connect businesses to our nation and the world. Creating new products, sourcing materials, or building an online platform. Together, we're here to make it happen.
+          At Glory Impact (M) SDN BHD, we are driven by a passion for building bridges between ideas, markets, and people. As a multifaceted global company, we specialize in creating innovative solutions that connect businesses to the world. Whether you're launching a new product, sourcing materials, or building an online platform — we're here to make it happen.
         </p>
       </div>
 

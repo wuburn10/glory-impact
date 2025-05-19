@@ -23,7 +23,7 @@ const Products = () => (
           key={product.id} 
           productName={product.name} 
           productImage={product.img} 
-          productDescription={product.description} 
+          productDescription={product.description}
         />
       ))}
     </div>

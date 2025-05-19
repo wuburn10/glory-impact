@@ -25,10 +25,10 @@ const Business = () =>  (
       You focus on growth, <br className="sm:block hidden" /> we’ll handle the rest.
     </h2>
     <p className={`${styles.paragraph} max-w-[470px] mt-5`}>
-      From global trading and contract manufacturing to web development and retail supply chain solutions — Glory Impact Resources is your trusted partner in delivering seamless, end-to-end business support across the globe.
+      From global trading and contract manufacturing to web development and retail supply chain solutions — Glory Impact (M) SDN BHD is your trusted partner in delivering seamless, end-to-end business support across the globe.
     </p>
 
-      <Button styles={`mt-10`} />
+      {/* <Button styles={`mt-10`} /> */}
     </div>
 
     <div className={`${layout.sectionImg} flex-col`}>

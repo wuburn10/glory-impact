@@ -12,7 +12,7 @@ const CardDeal = () => (
         Launch, scale, and distribute your products globally with our expert services in trading, merchandising, and e-commerce. We connect you with the right markets in just a few easy steps.
       </p>
 
-      <Button styles={`mt-10`} />
+      {/* <Button styles={`mt-10`} /> */}
     </div>
 
     <div className={layout.sectionImg}>
