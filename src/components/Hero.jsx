@@ -1,12 +1,16 @@
 import { useRef } from "react";
-import { ArrowRight } from "@phosphor-icons/react";
+import { ArrowRight, Handshake, Factory, Truck, Storefront } from "@phosphor-icons/react";
 import { gsap, SplitText, useGSAP, MOTION } from "../lib/gsap";
 import { scrollToHash } from "../lib/useSmoothScroll";
-import { CONTACT_LABEL, products } from "../constants";
+import { CONTACT_LABEL, countries } from "../constants";
 import earth from "../assets/stock/earth-night.webp";
 
-const perfume = products[0];
-const cream = products[1];
+const steps = [
+  { Icon: Handshake, title: "Source", note: "Vetted suppliers" },
+  { Icon: Factory, title: "Manufacture", note: "Made to your spec" },
+  { Icon: Truck, title: "Ship", note: "Border to border" },
+  { Icon: Storefront, title: "Retail", note: "On the shelf" },
+];
 
 const Hero = () => {
   const root = useRef(null);
@@ -18,13 +22,14 @@ const Hero = () => {
       mm.add(MOTION, () => {
         const q = gsap.utils.selector(root);
 
-        // Load-in: background settles, headline lines rise out of a mask, product lands.
+        // Load-in: background settles, headline lines rise out of a mask, glass panels float in.
         const intro = gsap.timeline({ defaults: { ease: "power4.out" } });
         intro
           .from(q("[data-bg]"), { scale: 1.3, autoAlpha: 0, duration: 2.2, ease: "power2.out" })
           .from(q("[data-fade]"), { y: 24, autoAlpha: 0, stagger: 0.12, duration: 1 }, 0.9)
-          .from(q("[data-prod='back']"), { yPercent: 40, autoAlpha: 0, rotate: -14, duration: 1.6 }, 0.6)
-          .from(q("[data-prod='front']"), { yPercent: 60, autoAlpha: 0, rotate: 10, duration: 1.8 }, 0.75);
+          .from(q("[data-glass]"), { y: 60, autoAlpha: 0, stagger: 0.18, duration: 1.5 }, 0.7)
+          .from(q("[data-step]"), { x: 16, autoAlpha: 0, stagger: 0.12, duration: 0.9 }, 1.3)
+          .from(q("[data-route]"), { scaleY: 0, transformOrigin: "top", duration: 1.2, ease: "power2.inOut" }, 1.3);
 
         const split = SplitText.create(q("h1"), {
           type: "lines",
@@ -43,8 +48,9 @@ const Hero = () => {
         out
           .to(q("[data-bg-wrap]"), { yPercent: 22, scale: 1.08 }, 0)
           .to(q("[data-copy]"), { yPercent: -30, autoAlpha: 0 }, 0)
-          .to(q("[data-prod-wrap='back']"), { yPercent: -35, rotate: -6 }, 0)
-          .to(q("[data-prod-wrap='front']"), { yPercent: -70, rotate: 5 }, 0);
+          .to(q("[data-wrap='main']"), { yPercent: -25 }, 0)
+          .to(q("[data-wrap='countries']"), { yPercent: -60 }, 0)
+          .to(q("[data-wrap='sold']"), { yPercent: -110 }, 0);
 
         // Pointer depth on devices that have a fine pointer.
         const fine = window.matchMedia("(pointer: fine)").matches;
@@ -52,8 +58,9 @@ const Hero = () => {
 
         const planes = [
           { el: q("[data-bg]")[0], depth: -12 },
-          { el: q("[data-prod='back']")[0], depth: 18 },
-          { el: q("[data-prod='front']")[0], depth: 36 },
+          { el: q("[data-depth='main']")[0], depth: 18 },
+          { el: q("[data-depth='countries']")[0], depth: 34 },
+          { el: q("[data-depth='sold']")[0], depth: 52 },
         ].map((p) => ({
           x: gsap.quickTo(p.el, "x", { duration: 1.2, ease: "power3.out" }),
           y: gsap.quickTo(p.el, "y", { duration: 1.2, ease: "power3.out" }),
@@ -103,29 +110,54 @@ const Hero = () => {
       <div className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(11,13,18,0.95)_0%,rgba(11,13,18,0.8)_35%,rgba(11,13,18,0.35)_58%,rgba(11,13,18,0)_78%)] max-lg:bg-[linear-gradient(0deg,rgba(11,13,18,0.96)_15%,rgba(11,13,18,0.35)_60%,rgba(11,13,18,0.1)_100%)]" />
       <div className="absolute inset-x-0 bottom-0 -z-10 h-40 bg-gradient-to-t from-canvas to-transparent" />
 
-      {/* Planes 2 and 3: products, between the world and the viewer */}
-      <div className="pointer-events-none absolute inset-0 -z-[5]">
-        <div
-          data-prod-wrap="back"
-          className="absolute right-[24%] top-[24%] hidden w-[17vw] max-w-[260px] lg:block"
-        >
-          <img
-            data-prod="back"
-            src={cream.img}
-            alt=""
-            className="w-full -rotate-12 drop-shadow-[0_30px_40px_rgba(0,0,0,0.6)]"
-          />
+      {/* Planes 2 to 4: glass panels floating over the world, each at its own depth */}
+      <div className="pointer-events-none absolute inset-0 -z-[5] hidden lg:block" aria-hidden="true">
+        <div data-wrap="main" className="absolute right-[8%] top-[19%] w-[min(25vw,360px)]">
+          <div data-depth="main">
+            <div data-glass className="glass rounded-2xl p-6">
+              <p className="text-sm text-ink/70">From factory to shelf</p>
+              <ol className="relative mt-5 flex flex-col gap-5">
+                <span data-route className="absolute bottom-5 left-[19px] top-5 w-px bg-gradient-to-b from-accent/80 to-ink/10" />
+                {steps.map(({ Icon, title, note }) => (
+                  <li key={title} data-step className="relative flex items-center gap-4">
+                    <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-white/20 bg-canvas/60 text-ink">
+                      <Icon size={18} />
+                    </span>
+                    <span>
+                      <span className="block font-medium leading-tight">{title}</span>
+                      <span className="block text-sm text-ink/60">{note}</span>
+                    </span>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          </div>
         </div>
-        <div
-          data-prod-wrap="front"
-          className="absolute right-[-6%] top-[8%] w-[62vw] max-w-[300px] sm:right-[4%] sm:max-w-[340px] lg:right-[6%] lg:top-auto lg:bottom-[10%] lg:w-[30vw] lg:max-w-[460px]"
-        >
-          <img
-            data-prod="front"
-            src={perfume.img}
-            alt=""
-            className="w-full rotate-6 drop-shadow-[0_50px_60px_rgba(0,0,0,0.65)]"
-          />
+
+        <div data-wrap="countries" className="absolute bottom-[11%] right-[3%] w-[min(22vw,320px)]">
+          <div data-depth="countries">
+            <div data-glass className="glass rounded-2xl p-5">
+              <p className="text-sm text-ink/70">Active in</p>
+              <ul className="mt-3 flex flex-wrap gap-2">
+                {countries.map((c) => (
+                  <li key={c} className="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-sm">
+                    {c}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div data-wrap="sold" className="absolute bottom-[26%] right-[33%]">
+          <div data-depth="sold">
+            <div data-glass className="glass rounded-2xl px-5 py-4">
+              <p className="display text-4xl leading-none">
+                1M<span className="text-accent">+</span>
+              </p>
+              <p className="mt-1 text-sm text-ink/70">Products sold</p>
+            </div>
+          </div>
         </div>
       </div>
 
