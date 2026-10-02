@@ -1,196 +1,117 @@
-import { 
-  lav, fhw, bot, so, sevenoil, ufresh,
-  facebook, instagram, linkedin, twitter, 
-  mi, mtc, ysp, 
-  send, shield, star  
-} from "../assets";
+import lavende from "../assets/products/lavende-perfume.webp";
+import hairCream from "../assets/products/hair-cream-gel.webp";
+import ufresh from "../assets/products/ufresh-feminine-wash.webp";
+import sevenOil from "../assets/products/seven-oil.webp";
+import ufreshPdf from "../assets/docs/ufresh.pdf";
+import sevenOilPdf from "../assets/docs/sevenoil.pdf";
+
+import containerShip from "../assets/stock/container-ship.webp";
+import manufacturing from "../assets/stock/manufacturing.webp";
+import warehouse from "../assets/stock/warehouse.webp";
+import retail from "../assets/stock/retail.webp";
+
+import mi from "../assets/clients/mi.png";
+import mtc from "../assets/clients/mtc.png";
+import ysp from "../assets/clients/ysp.png";
+
+export const CONTACT_LABEL = "Get in touch";
+
+export const contact = {
+  person: "M. Suppiah",
+  role: "Managing Director",
+  phone: "+60162440677",
+  phoneLabel: "+60 16-244 0677",
+  email: "gloryimpact238@gmail.com",
+  address: ["8 Avenue Business Center, A-3-9", "Jalan 8/1, 46000 Petaling Jaya", "Selangor, Malaysia"],
+};
 
 export const navLinks = [
-  {
-    id: "home",
-    title: "Home",
-  },
-  {
-    id: "services",
-    title: "Services",
-  },
-  {
-    id: "products",
-    title: "Products",
-  },
-  {
-    id: "clients",
-    title: "Clients",
-  },
+  { id: "services", title: "Services" },
+  { id: "products", title: "Products" },
+  { id: "reach", title: "Reach" },
 ];
 
-export const features = [
+export const services = [
   {
-    id: "feature-1",
-    icon: star,
-    title: "Global Trading",
-    content:
-      "We connect businesses across borders through strategic sourcing and reliable logistics partnerships.",
+    id: "trading",
+    title: "Global trading",
+    body: "Strategic sourcing and reliable logistics partners that move goods across borders on schedule.",
+    img: containerShip,
+    alt: "Container ship loaded with cargo at sea",
   },
   {
-    id: "feature-2",
-    icon: shield,
-    title: "Secure Supply Chain",
-    content:
-      "From manufacturing to retail, our supply chain solutions ensure safe, consistent, and timely delivery.",
+    id: "manufacturing",
+    title: "Contract manufacturing",
+    body: "Formulation, filling and packaging with vetted factories, held to the specification you sign off.",
+    img: manufacturing,
+    alt: "Engineer working at a production line workstation",
   },
   {
-    id: "feature-3",
-    icon: send,
-    title: "End-to-End Development",
-    content:
-      "From product ideation to market launch, we offer integrated product development and e-commerce support.",
+    id: "supply",
+    title: "Supply chain",
+    body: "Warehousing, inventory and distribution planned end to end, so stock arrives safe and on time.",
+    img: warehouse,
+    alt: "Warehouse floor stacked with boxed inventory",
+  },
+  {
+    id: "development",
+    title: "Product and e-commerce",
+    body: "From the first idea to market launch: branding, listings and the store that sells it.",
+    img: retail,
+    alt: "Customer paying for a product at a retail counter",
   },
 ];
 
 export const products = [
   {
-    id: "product-1",
-    name: "Various Perfumes",
-    img: lav,
+    id: "lavende",
+    name: "Perfume Collection",
+    line: "A range of fragrances, bottled and boxed for retail.",
+    img: lavende,
+    glow: "rgba(190, 40, 52, 0.55)",
   },
   {
-    id: "product-2",
+    id: "hair-cream",
     name: "2 in 1 Hair Cream & Gel",
-    img: bot,
+    line: "Hold and conditioning in one tube, made for daily styling.",
+    img: hairCream,
+    glow: "rgba(170, 186, 210, 0.4)",
   },
   {
-    id: "product-3",
+    id: "ufresh",
     name: "Herbal Feminine Wash",
-    description: ufresh,
-    img: fhw,
+    line: "A gentle herbal wash for everyday intimate care.",
+    img: ufresh,
+    glow: "rgba(214, 92, 156, 0.45)",
+    doc: ufreshPdf,
   },
   {
-    id: "product-4",
+    id: "seven-oil",
     name: "Seven Oil Golden Shower Oil",
-    description: sevenoil,
-    img: so,
+    line: "Seven botanical oils blended into one nourishing shower oil.",
+    img: sevenOil,
+    glow: "rgba(222, 160, 48, 0.5)",
+    doc: sevenOilPdf,
   },
 ];
 
 export const stats = [
-  {
-    id: "stats-1",
-    title: "Products Sold",
-    value: "1M+",
-  },
-  {
-    id: "stats-2",
-    title: "Years Experience",
-    value: "7+",
-  },
-  {
-    id: "stats-3",
-    title: "Global Clients",
-    value: "4+",
-  },
+  { id: "sold", value: 1, suffix: "M+", label: "Products sold" },
+  { id: "years", value: 7, suffix: "+", label: "Years in trade" },
+  { id: "countries", value: 4, suffix: "", label: "Countries served" },
 ];
 
-export const footerLinks = [
-  {
-    title: "Company",
-    links: [
-      {
-        name: "About Us",
-        link: "#about",
-      },
-      {
-        name: "Services",
-        link: "#services",
-      },
-      {
-        name: "Clients",
-        link: "#clients",
-      },
-      {
-        name: "Careers",
-        link: "#careers",
-      },
-      {
-        name: "Terms of Service",
-        link: "#terms",
-      },
-    ],
-  },
-  {
-    title: "Resources",
-    links: [
-      {
-        name: "Help Center",
-        link: "#help",
-      },
-      {
-        name: "Blog",
-        link: "#blog",
-      },
-      {
-        name: "Case Studies",
-        link: "#case-studies",
-      },
-      {
-        name: "Press",
-        link: "#press",
-      },
-      {
-        name: "Newsletters",
-        link: "#newsletters",
-      },
-    ],
-  },
-  {
-    title: "Partnership",
-    links: [
-      {
-        name: "Our Partners",
-        link: "#partners",
-      },
-      {
-        name: "Become a Partner",
-        link: "#become-partner",
-      },
-    ],
-  },
-];
-
-export const socialMedia = [
-  {
-    id: "social-media-1",
-    icon: instagram,
-    link: "https://www.instagram.com/gloryimpactresources",
-  },
-  {
-    id: "social-media-2",
-    icon: facebook,
-    link: "https://www.facebook.com/gloryimpactresources",
-  },
-  {
-    id: "social-media-3",
-    icon: twitter,
-    link: "https://www.twitter.com/gloryimpact",
-  },
-  {
-    id: "social-media-4",
-    icon: linkedin,
-    link: "https://www.linkedin.com/company/gloryimpactresources",
-  },
-];
+export const countries = ["Malaysia", "Singapore", "Indonesia", "Thailand"];
 
 export const clients = [
-  {
-    id: "client-1",
-    logo: mi,
-  },
-  {
-    id: "client-2",
-    logo: mtc,
-  },
-  {
-    id: "client-3",
-    logo: ysp,
-  },
+  { id: "mi", name: "M International", logo: mi },
+  { id: "mtc", name: "Majestic Touch Concepts", logo: mtc },
+  { id: "ysp", name: "Y.S.P. SAH", logo: ysp },
+];
+
+export const socials = [
+  { id: "instagram", label: "Instagram", href: "https://www.instagram.com/gloryimpactresources" },
+  { id: "facebook", label: "Facebook", href: "https://www.facebook.com/gloryimpactresources" },
+  { id: "x", label: "X", href: "https://www.twitter.com/gloryimpact" },
+  { id: "linkedin", label: "LinkedIn", href: "https://www.linkedin.com/company/gloryimpactresources" },
 ];

@@ -1,73 +1,153 @@
-import styles from "../style";
-import { robot } from "../assets";
-import GetStarted from "./GetStarted";
+import { useRef } from "react";
+import { ArrowRight } from "@phosphor-icons/react";
+import { gsap, SplitText, useGSAP, MOTION } from "../lib/gsap";
+import { scrollToHash } from "../lib/useSmoothScroll";
+import { CONTACT_LABEL, products } from "../constants";
+import earth from "../assets/stock/earth-night.webp";
+
+const perfume = products[0];
+const cream = products[1];
 
 const Hero = () => {
+  const root = useRef(null);
+
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia();
+
+      mm.add(MOTION, () => {
+        const q = gsap.utils.selector(root);
+
+        // Load-in: background settles, headline lines rise out of a mask, product lands.
+        const intro = gsap.timeline({ defaults: { ease: "power4.out" } });
+        intro
+          .from(q("[data-bg]"), { scale: 1.3, autoAlpha: 0, duration: 2.2, ease: "power2.out" })
+          .from(q("[data-fade]"), { y: 24, autoAlpha: 0, stagger: 0.12, duration: 1 }, 0.9)
+          .from(q("[data-prod='back']"), { yPercent: 40, autoAlpha: 0, rotate: -14, duration: 1.6 }, 0.6)
+          .from(q("[data-prod='front']"), { yPercent: 60, autoAlpha: 0, rotate: 10, duration: 1.8 }, 0.75);
+
+        const split = SplitText.create(q("h1"), {
+          type: "lines",
+          mask: "lines",
+          linesClass: "split-line",
+          autoSplit: true,
+          onSplit: (self) =>
+            gsap.from(self.lines, { yPercent: 110, stagger: 0.1, duration: 1.3, ease: "power4.out", delay: 0.45 }),
+        });
+
+        // Scroll: each plane leaves at its own rate, which is where the depth comes from.
+        const out = gsap.timeline({
+          defaults: { ease: "none" },
+          scrollTrigger: { trigger: root.current, start: "top top", end: "bottom top", scrub: true },
+        });
+        out
+          .to(q("[data-bg-wrap]"), { yPercent: 22, scale: 1.08 }, 0)
+          .to(q("[data-copy]"), { yPercent: -30, autoAlpha: 0 }, 0)
+          .to(q("[data-prod-wrap='back']"), { yPercent: -35, rotate: -6 }, 0)
+          .to(q("[data-prod-wrap='front']"), { yPercent: -70, rotate: 5 }, 0);
+
+        // Pointer depth on devices that have a fine pointer.
+        const fine = window.matchMedia("(pointer: fine)").matches;
+        if (!fine) return () => split.revert();
+
+        const planes = [
+          { el: q("[data-bg]")[0], depth: -12 },
+          { el: q("[data-prod='back']")[0], depth: 18 },
+          { el: q("[data-prod='front']")[0], depth: 36 },
+        ].map((p) => ({
+          x: gsap.quickTo(p.el, "x", { duration: 1.2, ease: "power3.out" }),
+          y: gsap.quickTo(p.el, "y", { duration: 1.2, ease: "power3.out" }),
+          depth: p.depth,
+        }));
+
+        const onMove = (e) => {
+          const nx = e.clientX / window.innerWidth - 0.5;
+          const ny = e.clientY / window.innerHeight - 0.5;
+          planes.forEach((p) => {
+            p.x(nx * p.depth);
+            p.y(ny * p.depth);
+          });
+        };
+        window.addEventListener("pointermove", onMove);
+        return () => {
+          window.removeEventListener("pointermove", onMove);
+          split.revert();
+        };
+      });
+    },
+    { scope: root }
+  );
+
+  const go = (hash) => (e) => {
+    e.preventDefault();
+    scrollToHash(hash);
+  };
+
   return (
     <section
       id="home"
-      className={`flex md:flex-row flex-col ${styles.paddingY} pt-28 md:pt-32`}
+      ref={root}
+      className="relative isolate flex min-h-[640px] h-[100svh] items-end overflow-hidden pb-16 sm:pb-20 lg:items-center lg:pb-0"
     >
-      {/* Left Content */}
-      <div
-        className={`flex-1 ${styles.flexStart} !justify-start flex-col xl:px-0 sm:px-16 px-6`}
-      >
-        {/* Badge */}
-        <div className="flex flex-row items-center py-2 px-4 bg-discount-gradient rounded-full mb-6 border border-white/10 gap-2">
-          <span className="w-2 h-2 rounded-full bg-secondary animate-pulse" />
-          <p className="font-poppins font-medium text-[13px] text-dimWhite">
-            Trusted by businesses{" "}
-            <span className="text-white font-semibold">worldwide</span>
-          </p>
-        </div>
+      {/* Plane 1: the world */}
+      <div data-bg-wrap className="absolute inset-0 -z-20">
+        <img
+          data-bg
+          src={earth}
+          alt=""
+          className="h-full w-full scale-110 object-cover object-[60%_50%]"
+          fetchpriority="high"
+        />
+      </div>
+      {/* Scrim only where the copy sits */}
+      <div className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(11,13,18,0.95)_0%,rgba(11,13,18,0.8)_35%,rgba(11,13,18,0.35)_58%,rgba(11,13,18,0)_78%)] max-lg:bg-[linear-gradient(0deg,rgba(11,13,18,0.96)_15%,rgba(11,13,18,0.35)_60%,rgba(11,13,18,0.1)_100%)]" />
+      <div className="absolute inset-x-0 bottom-0 -z-10 h-40 bg-gradient-to-t from-canvas to-transparent" />
 
-        {/* Heading */}
-        <div className="hero-text-1">
-          <h1 className="font-poppins font-bold ss:text-[72px] text-[52px] text-white ss:leading-[100px] leading-[72px]">
-            <span className="text-gradient">Global</span>
-          </h1>
+      {/* Planes 2 and 3: products, between the world and the viewer */}
+      <div className="pointer-events-none absolute inset-0 -z-[5]">
+        <div
+          data-prod-wrap="back"
+          className="absolute right-[24%] top-[24%] hidden w-[17vw] max-w-[260px] lg:block"
+        >
+          <img
+            data-prod="back"
+            src={cream.img}
+            alt=""
+            className="w-full -rotate-12 drop-shadow-[0_30px_40px_rgba(0,0,0,0.6)]"
+          />
         </div>
-        <div className="hero-text-2">
-          <h1 className="font-poppins font-bold ss:text-[68px] text-[52px] text-white ss:leading-[96px] leading-[72px] w-full">
-            Connection.
-          </h1>
-        </div>
-
-        <div className="hero-text-3">
-          <p className={`${styles.paragraph} mt-6 max-w-[500px] leading-relaxed`}>
-            At <span className="text-white font-semibold">Glory Impact (M) SDN BHD</span>, we are driven by a passion for building bridges between ideas, markets, and people. A multifaceted global company specializing in innovative solutions that connect businesses to the world.
-          </p>
-
-          <div className="flex flex-row items-center gap-4 mt-8">
-            <a href="#services">
-              <button className="btn-primary py-3.5 px-8 font-poppins font-semibold text-[16px] text-primary bg-blue-gradient rounded-xl outline-none">
-                Explore Services
-              </button>
-            </a>
-            <a href="#products" className="font-poppins font-medium text-[16px] text-dimWhite hover:text-white transition-colors duration-200 flex items-center gap-2 group">
-              View Products
-              <span className="transition-transform duration-200 group-hover:translate-x-1">→</span>
-            </a>
-          </div>
+        <div
+          data-prod-wrap="front"
+          className="absolute right-[-6%] top-[8%] w-[62vw] max-w-[300px] sm:right-[4%] sm:max-w-[340px] lg:right-[6%] lg:top-auto lg:bottom-[10%] lg:w-[30vw] lg:max-w-[460px]"
+        >
+          <img
+            data-prod="front"
+            src={perfume.img}
+            alt=""
+            className="w-full rotate-6 drop-shadow-[0_50px_60px_rgba(0,0,0,0.65)]"
+          />
         </div>
       </div>
 
-      {/* Right Image */}
-      <div
-        className={`flex-1 flex ${styles.flexCenter} md:my-0 my-10 relative hero-image`}
-      >
-        <div className="hero-float w-full h-full flex items-center justify-center">
-          <img
-            src={robot}
-            alt="globe"
-            className="w-[100%] h-[100%] relative z-[5] drop-shadow-2xl"
-          />
+      <div className="page-x">
+        <div data-copy className="max-w-[640px] lg:max-w-[720px]">
+          <h1 className="display text-[2.75rem] leading-[1.02] sm:text-6xl lg:text-7xl">
+            Global connection for products that travel.
+          </h1>
+          <p data-fade className="lede mt-6 max-w-[46ch] text-ink/75">
+            We source, manufacture and distribute consumer products across Southeast Asia, from first sample to retail
+            shelf.
+          </p>
+          <div data-fade className="mt-9 flex flex-wrap items-center gap-3">
+            <a href="#contact" onClick={go("#contact")} className="btn-primary">
+              {CONTACT_LABEL}
+            </a>
+            <a href="#products" onClick={go("#products")} className="btn-ghost group">
+              See products
+              <ArrowRight size={16} className="transition-transform duration-200 group-hover:translate-x-1" />
+            </a>
+          </div>
         </div>
-
-        {/* Gradient blobs */}
-        <div className="absolute z-[0] w-[40%] h-[35%] top-0 pink__gradient" />
-        <div className="absolute z-[1] w-[80%] h-[80%] rounded-full white__gradient bottom-40" />
-        <div className="absolute z-[0] w-[50%] h-[50%] right-20 bottom-20 blue__gradient" />
       </div>
     </section>
   );

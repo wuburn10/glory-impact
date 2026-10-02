@@ -1,33 +1,40 @@
-import styles from "./style";
-import { Billing, Business, CardDeal, Clients, CTA, Footer, Navbar, Stats, Products, Hero } from "./components";
+import { useSmoothScroll } from "./lib/useSmoothScroll";
+import Nav from "./components/Nav";
+import Hero from "./components/Hero";
+import Clients from "./components/Clients";
+import Manifesto from "./components/Manifesto";
+import Services from "./components/Services";
+import Stats from "./components/Stats";
+import Products from "./components/Products";
+import Reach from "./components/Reach";
+import Contact from "./components/Contact";
+import Footer from "./components/Footer";
 
-const App = () => (
-  <section className="bg-primary w-full overflow-hidden"> 
-    <div className={`${styles.paddingX} ${styles.flexCenter}`}>
-      <div className={`${styles.boxWidth}`}>
-        <Navbar />
-      </div>
-    </div>
+const App = () => {
+  useSmoothScroll();
 
-    <div className={`bg-primary ${styles.flexStart}`}>
-      <div className={`${styles.boxWidth}`}>
+  return (
+    <>
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-accent focus:px-4 focus:py-2 focus:text-accent-ink"
+      >
+        Skip to content
+      </a>
+      <Nav />
+      <main id="main">
         <Hero />
-      </div>
-    </div>
-    
-    <div className={`bg-primary ${styles.paddingX} ${styles.flexCenter}`}>
-      <div className={`${styles.boxWidth}`}>
-        <Stats />
-        <Business />
-        <Billing />
-        <CardDeal />
-        <Products />
         <Clients />
-        <CTA />
-        <Footer />
-      </div>
-    </div>
-  </section>
-);
+        <Manifesto />
+        <Services />
+        <Stats />
+        <Products />
+        <Reach />
+        <Contact />
+      </main>
+      <Footer />
+    </>
+  );
+};
 
 export default App;

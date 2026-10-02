@@ -1,30 +1,68 @@
-import { stats } from "../constants";
-import styles from "../style";
+import { useRef } from "react";
+import { gsap, useGSAP, MOTION } from "../lib/gsap";
+import { stats, countries } from "../constants";
 
-const Stats = () => (
-  <section className={`${styles.flexCenter} flex-row flex-wrap sm:mb-20 mb-6 relative`}>
-    {/* Subtle divider above */}
-    <div className="section-divider w-full mb-10" />
+const Stats = () => {
+  const root = useRef(null);
 
-    <div className="flex flex-row flex-wrap justify-center w-full gap-2">
-      {stats.map((stat, index) => (
-        <div
-          key={stat.id}
-          className={`stat-item flex-1 flex flex-col justify-center items-center px-6 py-6 rounded-2xl glass-card min-w-[140px] mx-2`}
-        >
-          <h4 className="font-poppins font-bold xs:text-[44px] text-[34px] xs:leading-[55px] leading-[44px] text-white">
-            {stat.value}
-          </h4>
-          <p className="font-poppins font-normal xs:text-[14px] text-[13px] text-gradient uppercase tracking-widest mt-1 text-center">
-            {stat.title}
-          </p>
-        </div>
-      ))}
-    </div>
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia();
+      mm.add(MOTION, () => {
+        const tl = gsap.timeline({ scrollTrigger: { trigger: root.current, start: "top 70%" } });
 
-    {/* Subtle divider below */}
-    <div className="section-divider w-full mt-10" />
-  </section>
-);
+        gsap.utils.toArray("[data-count]", root.current).forEach((el, i) => {
+          const end = Number(el.dataset.count);
+          const obj = { v: 0 };
+          tl.to(
+            obj,
+            {
+              v: end,
+              duration: 1.6,
+              ease: "power2.out",
+              onUpdate: () => (el.textContent = Math.round(obj.v)),
+            },
+            i * 0.15
+          );
+        });
+
+        tl.from("[data-stat]", { y: 40, autoAlpha: 0, stagger: 0.15, duration: 1 }, 0).from(
+          "[data-country]",
+          { yPercent: 100, stagger: 0.08, duration: 0.8 },
+          0.5
+        );
+      });
+    },
+    { scope: root }
+  );
+
+  return (
+    <section ref={root} aria-label="Glory Impact in numbers" className="py-24 sm:py-32">
+      <div className="page-x">
+        <dl className="grid gap-12 sm:grid-cols-3 sm:gap-8">
+          {stats.map((s) => (
+            <div key={s.id} data-stat className="border-t border-line pt-6">
+              <dt className="text-mute">{s.label}</dt>
+              <dd className="display mt-3 text-7xl leading-none tabular-nums lg:text-8xl">
+                <span data-count={s.value}>{s.value}</span>
+                <span className="text-accent">{s.suffix}</span>
+              </dd>
+            </div>
+          ))}
+        </dl>
+
+        <ul className="mt-16 flex flex-wrap gap-x-8 gap-y-2 text-2xl font-medium tracking-tight text-ink/80 sm:text-3xl" aria-label="Countries served">
+          {countries.map((c) => (
+            <li key={c} className="overflow-hidden">
+              <span data-country className="block">
+                {c}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  );
+};
 
 export default Stats;
